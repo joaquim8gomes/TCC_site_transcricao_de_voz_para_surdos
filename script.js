@@ -11,9 +11,11 @@ let recognition;
 let isListening = false;
 let currentSessionText = ""; // Texto desta sessão
 
+//Configuração por reconhecimento de voz
+//webkitSpeechRecognition: Reconhecimento do navegador
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-// Inicia o microfone
+// Inicia o microfone e verifica se navegador suporta o microfone
 if (!window.SpeechRecognition) {
   alert("Seu navegador não suporta a API de reconhecimento de voz.");
 } else {
