@@ -9,11 +9,8 @@
 <body>
 
 <h1>Transcrição de Voz</h1>
-<button id="start" aria-label="Iniciar transcrição">Iniciar</button>
-<button id="stop" aria-label="Parar transcrição" disabled>Parar</button>
-<button id="clearHistory" aria-label="Limpar histórico">Limpar Histórico</button>
-
-<div id="status"></div>
+<button id="start">Iniciar</button>
+<button id="stop" disabled>Parar</button>
 
 <p><strong>Sessão Atual:</strong></p>
 <div id="sessaoAtual"></div>
