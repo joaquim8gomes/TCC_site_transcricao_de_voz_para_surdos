@@ -38,11 +38,12 @@ if (!window.SpeechRecognition) {
     sessaoAtual.textContent = currentSessionText + interimTranscript;
   };
 
+  //Mostra possiveis erros
   recognition.onerror = (event) => {
     console.error('Erro no reconhecimento: ', event.error);
   };
 }
-
+//Botao iniciar
 startBtn.onclick = () => {
   if (recognition && !isListening) {
     // Limpa a sessão atual ao iniciar
@@ -55,6 +56,7 @@ startBtn.onclick = () => {
   }
 };
 
+//Botao parar
 stopBtn.onclick = () => {
   if (recognition && isListening) {
     recognition.stop();
