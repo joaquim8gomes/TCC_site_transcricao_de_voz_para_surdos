@@ -110,6 +110,33 @@
     clearBtn.onclick = clearHistory;
   }
 
+  const exportBtn = document.getElementById('exportHistory');
+
+    // Função para exportar transcrição salva
+    if (exportBtn) {
+    exportBtn.onclick = () => {
+        // Pega todo o texto do histórico
+        let text = '';
+        document.querySelectorAll('#historico .bloco-sessao').forEach((bloco, i) => {
+        text += `Sessão ${i + 1}:\n${bloco.textContent}\n\n`;
+        });
+        if (!text) {
+        alert('Nenhuma sessão no histórico para exportar.');
+        return;
+        }
+        // Cria um blob e link de download
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'historico-transcricao.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+    }
+
   // Carrega histórico ao iniciar
   loadHistory();
 })();
