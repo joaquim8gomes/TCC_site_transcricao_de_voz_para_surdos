@@ -20,9 +20,11 @@
   //Função para atualizar o status na interface do usuário
   function setStatus(msg, active = false) {
     status.textContent = msg;
+    //Muda a cor para indicar se o status é "ativo"
     status.style.color = active ? "red" : "black";
   }
 
+  // Função para adicionar o texto finalizado ao histórico de sessões
   function addToHistory(text) {
     const bloco = document.createElement('div');
     bloco.className = 'bloco-sessao';
@@ -31,29 +33,35 @@
     saveHistory();
   }
 
+  //Função para salvar o conteúdo HTML do histórico
   function saveHistory() {
     localStorage.setItem('speechHistory', historico.innerHTML);
   }
 
+  //Função para carregar o histórico salvo
   function loadHistory() {
     historico.innerHTML = localStorage.getItem('speechHistory') || '';
   }
 
+  //Função para limpar o histórico
   function clearHistory() {
     historico.innerHTML = '';
     saveHistory();
   }
 
+  // Alerta e desabilita botões se a API não for suportada pelo navegador
   if (!window.SpeechRecognition) {
     alert("Seu navegador não suporta a API de reconhecimento de voz.");
     startBtn.disabled = true;
     stopBtn.disabled = true;
   } else {
+    // Inicializa a API e configura seus parâmetros
     recognition = new SpeechRecognition();
     recognition.lang = 'pt-BR';
     recognition.interimResults = true;
     recognition.continuous = true;
 
+    //vento disparado quando o reconhecimento de voz é reconhecido
     recognition.onresult = (event) => {
       let interimTranscript = '';
       for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -63,9 +71,11 @@
           interimTranscript += event.results[i][0].transcript;
         }
       }
+      // Atualiza a área de sessão atual com o texto final
       sessaoAtual.textContent = currentSessionText + interimTranscript;
     };
 
+    // Evento disparado em caso de erro no reconhecimento.
     recognition.onerror = (event) => {
       setStatus('Erro: ' + event.error);
       isListening = false;
@@ -73,10 +83,12 @@
       stopBtn.disabled = true;
     };
 
+    // Evento disparado quando o motor de reconhecimento detecta o fim da fala
     recognition.onspeechend = () => {
       setStatus('Fala encerrada.');
     };
 
+    // Evento disparado quando o reconhecimento é encerrado
     recognition.onend = () => {
       setStatus('Reconhecimento parado.');
       isListening = false;
@@ -85,6 +97,7 @@
     };
   }
 
+  // Ação do botão INICIAR
   startBtn.onclick = () => {
     if (recognition && !isListening) {
       currentSessionText = "";
@@ -97,6 +110,7 @@
     }
   };
 
+  // Ação do botão PARAR
   stopBtn.onclick = () => {
     if (recognition && isListening) {
       recognition.stop();
@@ -109,6 +123,7 @@
     }
   };
 
+  // Ação do botão LIMPAR HISTÓRICO
   if (clearBtn) {
     clearBtn.onclick = clearHistory;
   }
