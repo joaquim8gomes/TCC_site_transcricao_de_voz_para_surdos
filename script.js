@@ -9,12 +9,15 @@
   const historico = document.getElementById('historico');
   const status = document.getElementById('status'); // Indicador de status
 
+  //Variaveis
   let recognition;
   let isListening = false;
   let currentSessionText = "";
 
+  //Compatibilidade com o Chrome
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  //Função para atualizar o status na interface do usuário
   function setStatus(msg, active = false) {
     status.textContent = msg;
     status.style.color = active ? "red" : "black";
